@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            <h2>Rent new tool</h2>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <!-- affiche le field description dans form -->
+                <div class="form-group">
+                    {{form.description.errors}}
+                    {{form.description.label_tag}}
+                    {{form.description}}
+                </div>
+                <div style="display: none;">
+                    <!-- preremplir les forms choice1 et choice2-->
+                    {{form.choice1 }}
+                    {{form.choice2 }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Add tool</button>
+                <a class="btn btn-warning" href="{% url 'polls:list' %}" role="button">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
