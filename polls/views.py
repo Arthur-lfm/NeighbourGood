@@ -17,7 +17,7 @@ def polls_list(request):
 
     if 'date' in request.GET:
         all_polls = all_polls.order_by('pub_date')
-
+    
     paginator = Paginator(all_polls, 6)  # Show 6 contacts per page
     paginator2 = Paginator(all_votes, 6)
     page = request.GET.get('page')
