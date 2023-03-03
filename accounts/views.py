@@ -6,12 +6,14 @@ from django.contrib import messages
 from django.http import HttpResponse
 
 
+
 def login_user(request):
+    # login methode for the user
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
-
+        
         if user is not None:
             login(request, user)
             redirect_url = request.GET.get('next', 'home')
@@ -24,11 +26,13 @@ def login_user(request):
 
 
 def logout_user(request):
+    # logout methode for the user
     logout(request)
     return redirect('home')
 
 
 def create_user(request):
+    # create user methode for the user
     if request.method == 'POST':
         check1 = False
         check2 = False

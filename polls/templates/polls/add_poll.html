@@ -14,14 +14,14 @@
             {% endif %}
             <form action="" method="POST">
                 {% csrf_token %}
-                <!-- affiche le field description dans form -->
+                <!-- displau the description field in the form -->
                 <div class="form-group">
                     {{form.description.errors}}
                     {{form.description.label_tag}}
                     {{form.description}}
                 </div>
                 <div style="display: none;">
-                    <!-- preremplir les forms choice1 et choice2-->
+                    <!-- fill the forms choice1 and choice2-->
                     {{form.choice1 }}
                     {{form.choice2 }}
                 </div>

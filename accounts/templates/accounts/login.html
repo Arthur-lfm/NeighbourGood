@@ -1,9 +1,12 @@
+<!-- Login form -->
+
 {% extends 'base.html' %}
 
 {% block content %}
 <div class="container">
     <div class="row center">
         <div class="col-md-6 offset-md-3">
+            <!-- display messages -->
             {% if messages %}
             <div class="messages">
                 {% for message in messages %}
@@ -15,6 +18,7 @@
                 {% endfor %}
             </div>
             {% endif %}
+            <!-- start of form -->
             <form action="" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
@@ -26,6 +30,7 @@
                     <input type="password" class="form-control" name="password" placeholder="Password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
+                <!-- if you don't have account you can register -->
                 <p>Need an account? <a href="{% url 'accounts:register' %}">Register Here</a></p>
             </form>
         </div>

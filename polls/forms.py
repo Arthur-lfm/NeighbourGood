@@ -4,7 +4,7 @@ from .models import Poll, Choice
 
 class PollAddForm(forms.ModelForm):
 
-    # mettre choice1 a "Rent" et choice2 a "Cancel" par defaut
+    # put choice1 to "Rent" and choice2 to "Cancel" as default
     choice1 = forms.CharField(label='Choice 1', max_length=100, initial='Rent')
     choice2 = forms.CharField(label='Choice 2', max_length=100, initial='Cancel')
 

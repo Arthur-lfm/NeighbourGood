@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 
+# 
+# form for user registration
+# 
 
 class UserRegistrationForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100, min_length=5,
