@@ -7,4 +7,7 @@ DEBUG = True
 INSTALLED_APPS += ['debug_toolbar',]
 
 # Add development-specific middleware
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware',]
+MIDDLEWARE += [
+  'debug_toolbar.middleware.DebugToolbarMiddleware',
+  'pollme.middleware.SecurityMiddleware',
+]
