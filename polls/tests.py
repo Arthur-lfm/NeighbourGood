@@ -1,43 +1,63 @@
 from django.test import TestCase
-import datetime
-
 from django.utils import timezone
-from django.urls import reverse
-
-from .models import Question
-
-
-class QuestionModelTest(TestCase):
-    def test_was_published_recently_with_future_question(self):
-        time = timezone.now() + datetime.timedelta(days=30)
-        future_question = Question(pub_date=time)
-        self.assertIs(future_question.was_published_recently(), False)
-
-        """
-      was_published_recently() returns False for questions whose pub_date
-      is older than 1 day.
-       """
+from django.contrib.auth.models import User
+from .models import Poll, Choice, Vote
 
 
-def test_was_published_recently_with_old_question(self):
-    """
-    was_published_recently() returns False for questions whose pub_date
-    is older than 1 day.
-    """
-    time = timezone.now() - datetime.timedelta(days=1, seconds=1)
-    old_question = Question(pub_date=time)
-    self.assertIs(old_question.was_published_recently(), False)
+class PollTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username='testuser', password='testpass')
+        self.poll = Poll.objects.create(
+            owner=self.user,
+            description='Test poll',
+            pub_date=timezone.now()
+        )
+        self.choice1 = Choice.objects.create(
+            poll=self.poll,
+            choice_description='Choice 1'
+        )
+        self.choice2 = Choice.objects.create(
+            poll=self.poll,
+            choice_description='Choice 2'
+        )
 
+    def test_user_can_vote(self):
+        """Test that user_can_vote() returns False when user already voted"""
+        vote = Vote.objects.create(
+            user=self.user,
+            poll=self.poll,
+            choice=self.choice1
+        )
+        self.assertFalse(self.poll.user_can_vote(self.user))
 
-def test_was_published_recently_with_recent_question(self):
-    """
-    was_published_recently() returns True for questions whose pub_date
-    is within the last day.
-    """
-    time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
-    recent_question = Question(pub_date=time)
-    self.assertIs(recent_question.was_published_recently(), True)
+    def test_get_vote_count(self):
+        """Test that get_vote_count returns correct number of votes"""
+        vote1 = Vote.objects.create(
+            user=self.user,
+            poll=self.poll,
+            choice=self.choice1
+        )
+        vote2 = Vote.objects.create(
+            user=self.user,
+            poll=self.poll,
+            choice=self.choice2
+        )
+        self.assertEqual(self.poll.get_vote_count, 2)
 
-
-
-# Create your tests here.
+    def test_get_result_dict(self):
+        """Test that get_result_dict() returns the expected result"""
+        Vote.objects.create(
+            user=self.user,
+            poll=self.poll,
+            choice=self.choice1
+        )
+        Vote.objects.create(
+            user=self.user,
+            poll=self.poll,
+            choice=self.choice2
+        )
+        result_dict = self.poll.get_result_dict()
+        self.assertEqual(len(result_dict), 2)
+        self.assertEqual(result_dict[0]['num_votes'], 1)
+        self.assertEqual(result_dict[1]['num_votes'], 1)
