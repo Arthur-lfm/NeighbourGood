@@ -4,4 +4,4 @@ from .settings import *
 DEBUG = False
 
 # Disable all middleware for testing
-MIDDLEWARE = []
+MIDDLEWARE = ['pollme.middleware.SecurityMiddleware',]
