@@ -2,6 +2,13 @@
 import os
 import sys
 
+if os.environ.get('DJANGO_SETTINGS_MODULE') == 'pollme.settings_dev':
+    settings_module = 'pollme.settings_dev'
+else:
+    settings_module = 'pollme.settings_test'
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pollme.settings')
     try:
