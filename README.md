@@ -1,6 +1,7 @@
 # NeighbourGood
 
 NeighbourGood is a web application that allows users to post and find items that they no longer need. Users can post items that they no longer need and other users can claim the items. Users can also search for items that they need and claim them.
+You can see the web application here https://gueguep.pythonanywhere.com/
 
 
 ## Getting Started
